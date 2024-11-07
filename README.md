@@ -2,6 +2,8 @@
 
 <img width="100%" src="https://moistgalaxy.wordpress.com/wp-content/uploads/2014/11/mx03vw.gif">
 
+# ESPAÑOL - ES
+
 ## Desarrolladores
 
 - **Jose Santana** [@JoSantana0005](https://github.com/JoSantana0005)
@@ -27,6 +29,8 @@ Se utilizó el lenguaje de programación Python debido a su facilidad de codific
 - Random
 
 ---
+
+# ENGLISH - EN
 
 ## Developers
 
