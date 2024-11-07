@@ -1,35 +1,47 @@
 import matplotlib.pyplot as plt
-import random as R
 import numpy as np
 
-# Numero de Generaciones Puntos aleatorios
-n = 50000
 
-# Coordenadas de los vértices del cuadrado de Sierpinski
-vertex_coordinates = [[-200, -100], [-200, 300], [200, -100], [200, 300], [-200, 100], [0, -100], [0, 300], [200, 100]]
+# Parámetros del cuadrado de Sierpinski
+level = 3  # Controla el número de subdivisiones
+size = 1  # Tamaño del cuadrado inicial
 
-# Listas para almacenar las coordenadas de los puntos generados
-x_coordinates = [vertex_coordinates[0][0]]
-y_coordinates = [vertex_coordinates[0][1]]
+def sierpinski_carpet(ax, x_start, y_start, size, level):
+    """
+    Función recursiva para dibujar el cuadrado de Sierpinski.
 
-# Generar puntos aleatorios dentro del cuadrado de Sierpinski
-for i in range(n):
-    r = R.randrange(8)
-    x_coordinates.append((x_coordinates[-1] + 2 * vertex_coordinates[r][0]) / 3)
-    y_coordinates.append((y_coordinates[-1] + 2 * vertex_coordinates[r][1]) / 3)
+    Args:
+        ax: Objeto de ejes de matplotlib.
+        x_start: Coordenada x de la esquina inferior izquierda del cuadrado.
+        y_start: Coordenada y de la esquina inferior izquierda del cuadrado.
+        size: Tamaño del lado del cuadrado.
+        level: Nivel de recursión (0 es el cuadrado base).
+    """
+    if level == 0:
+        # Dibujar el cuadrado base
+        ax.fill(
+            [x_start, x_start + size, x_start + size, x_start],
+            [y_start, y_start, y_start + size, y_start + size],
+            'black'
+        )
+    else:
+        # Tamaño del subcuadrado
+        new_size = size / 3
+        
+        # Dibujar los 8 subcuadrados recursivamente
+        for i in range(3):
+            for j in range(3):
+                if i == 1 and j == 1:
+                    # Saltar el cuadrado central
+                    continue
+                sierpinski_carpet(ax, x_start + i*new_size, y_start + j*new_size, new_size, level - 1)
 
-# Crear la figura y los ejes
+# Configuración del gráfico
 fig, ax = plt.subplots()
+ax.set_aspect('equal')
+ax.axis('off')
 
-# Generar colores aleatorios para cada punto
+# Dibujar el cuadrado de Sierpinski
+sierpinski_carpet(ax, 0, 0, size, level)
 
-#Por ejemplo se puede usar:
-# red, black, blue, green, yellow, cyan, magenta, white
-colors = 'black'  # +1 para incluir el primer punto
-
-# Dibujar los puntos con colores aleatorios
-ax.scatter(x_coordinates, y_coordinates, s=0.1, color=colors, alpha=0.5)
-
-# Configurar el título y mostrar el gráfico
-ax.set(title=f'Sierpinski Square for {n} points')
 plt.show()
